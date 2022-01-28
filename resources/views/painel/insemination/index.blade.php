@@ -37,7 +37,7 @@
     </div><!-- /.container-fluid -->
 </section>
 
-as
+
 
 <section class="content">
     <div class="container-fluid">
