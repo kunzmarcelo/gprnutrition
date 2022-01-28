@@ -51,7 +51,7 @@
                             <table class="table table-hover data-table" id="dataTable" width="100%" cellspacing="0">
                                 <thead>
                                     <tr>
-                                        <th>Cod</th>
+                                        <th>#</th>
                                         <th>Descrição</th>
                                         <th>Data de Entrada</th>
                                         <th>Valor</th>
