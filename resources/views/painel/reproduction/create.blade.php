@@ -1,6 +1,4 @@
-@extends('adminlte::page')
-@section('title', 'Farms Nutrition')
-
+@extends('layouts.app')
 
 @section('content')
 
@@ -145,7 +143,8 @@
 </section>
 @include('sweetalert::alert')
 @section('js')
-
+<script src="//code.jquery.com/jquery-3.5.1.js"></script>
+<script type="text/javascript" src="/vendor/adminlte/dist/js/moment.min.js"></script>
 <script>
     $(document).ready(function() {
         $("#coverage_date").on("change", function() {
@@ -158,7 +157,7 @@
                 $('#expected_delivery_date')[0].valueAsDate = date;
                 //$("#expected_delivery_date").val(date.toInputFormat());
             } else {
-                sweetAlert({
+                  Swal.fire({
                     title: 'Woops!',
                     text: 'Informe a data de previsão de cobertura corretamente!',
                     icon: 'error',
@@ -189,7 +188,7 @@
                 $('#dry_date')[0].valueAsDate = date;
                 //$("#expected_delivery_date").val(date.toInputFormat());
             } else {
-                sweetAlert({
+                  Swal.fire({
                     title: 'Woops!',
                     text: 'Informe a data de previsão de cobertura corretamente!',
                     icon: 'error',
@@ -219,7 +218,7 @@
                 $('#pre_delivery_date')[0].valueAsDate = date;
                 //$("#expected_delivery_date").val(date.toInputFormat());
             } else {
-                sweetAlert({
+                  Swal.fire({
                     title: 'Woops!',
                     text: 'Informe a data de previsão de cobertura corretamente!',
                     icon: 'error',

@@ -1,6 +1,4 @@
-@extends('adminlte::page')
-@section('title', 'Farms Nutrition')
-
+@extends('layouts.app')
 
 @section('content')
 
@@ -109,12 +107,12 @@
                 </div>
             </div>
         </div>
-  
+
 
     </div><!-- /.container-fluid -->
 </section>
 @section('js')
-
+<script src="//code.jquery.com/jquery-3.5.1.js"></script>
 <script>
     var first_milking = document.getElementById("first_milking");
     var second_milking = document.getElementById("second_milking");

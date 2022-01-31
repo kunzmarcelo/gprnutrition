@@ -30,7 +30,7 @@
 <section class="content">
     <div class="container-fluid">
 
-        @include('painel.home_includes.inline_cards')
+        {{-- @include('painel.home_includes.inline_cards') --}}
 
 
         @include('painel.home_includes.lista_prenhas')
@@ -40,15 +40,16 @@
 
 
 
-        @include('painel.home_includes.producao_animal')
+        {{-- @include('painel.home_includes.producao_animal') --}}
 
-        @include('painel.home_includes.producao_mensal')
+        {{-- @include('painel.home_includes.producao_mensal') --}}
 
     </div>
 </section>
 
 
 @stop
+
 
 @push('js')
 
@@ -66,7 +67,7 @@
   @if($checksetting < 1)
 
     const url = 'configuracao';
-    swal({
+      Swal.fire({
         title: "Configurações pendentes!",
         text: "Para um bom funcionamento defina essas configurações!",
         icon: 'warning',

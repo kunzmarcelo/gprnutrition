@@ -1,8 +1,9 @@
-@extends('adminlte::page')
-@section('title', 'Farms Nutrition')
-
-
+@extends('layouts.app')
+@section('css')
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/4.0.0-alpha.1/css/bootstrap-switch.min.css">
+@stop
 @section('content')
+
 @include('sweetalert::alert')
 <section class="content-header">
     <div class="container-fluid">
@@ -113,7 +114,12 @@
 </section>
 @section('js')
 
+<script src="//code.jquery.com/jquery-3.5.1.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/4.0.0-alpha.1/js/bootstrap-switch.min.js"></script>
+<script src="//unpkg.com/bootstrap-switch@4.0.0-alpha.1/dist/js/bootstrap-switch.js"></script>
+
 <script>
+$("[name='animals_id[]']").bootstrapSwitch();
 // // -----------> esse aqui funcina ----------
 $('#application_date')[0].valueAsDate = new Date();
   //var tempo = $("#grace_days option:selected").val();
@@ -126,35 +132,7 @@ $('#application_date')[0].valueAsDate = new Date();
     });
     $('#application_date').change();
 
-// $('#application_date')[0].valueAsDate = new Date();
-//       $('#application_date').change(function() {
-//
-//         var tempo = $('#medicine_id option:selected').attr('data-valor');
-//         var tempo2 = (parseInt(tempo)); //
-//
-//             var dias = tempo2;
-//             var dataAtual = this.valueAsDate;
-//             var previsao = new Date();
-//
-//             previsao.setDate(dataAtual.getDate() + dias);
-//             n = previsao.getDate()  +"/" + (previsao.getMonth() + 1)+ "/" + previsao.getFullYear();
-//     		      $("#next_application").val(n);
-//
-//     });
 
-
-
-// aqui não está funcionando ---------->
-    // $('#application_date')[0].valueAsDate = new Date();
-    //   var tempo = $('#medicine_id option:selected').attr('data-valor');
-    //   var tempo2 = (parseInt(tempo)); //
-    //
-    //   $('#application_date').change(function() {
-    //       var date = this.valueAsDate;
-    //       date.setDate(date.getDate() + tempo2);
-    //       $('#next_application')[0].valueAsDate = date;
-    //   });
-    //   $('#application_date').change();
 </script>
 
 @stop

@@ -1,6 +1,4 @@
-@extends('adminlte::page')
-@section('title', 'Farms Nutrition')
-
+@extends('layouts.app')
 
 
 @section('content')
@@ -37,14 +35,14 @@
                                 <div class="col-sm-4">
                                     <!-- text input -->
                                     <div class="form-group">
-                                        <label>Nome</label>
+                                        <label>Nome*</label>
                                         <input class="{{ $errors->has('name') ? 'form-control is-invalid' : 'form-control' }} " value="{{old('name')}}" name="name" id="name" type="text" placeholder="Nome">
                                     </div>
                                 </div>
                                 <div class="col-sm-4">
                                     <!-- text input -->
                                     <div class="form-group">
-                                        <label>Registro</label>
+                                        <label>Registro*</label>
                                         <input class="{{ $errors->has('record') ? 'form-control is-invalid' : 'form-control' }} " value="{{old('record')}}" name="record" id="record" type="text" placeholder="Registro">
                                     </div>
                                 </div>
@@ -80,7 +78,7 @@
 
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="supplier_company">Empresa Fornecedora</label>
+                                        <label for="supplier_company">Empresa Fornecedora*</label>
                                         <input class="{{ $errors->has('supplier_company') ? 'form-control is-invalid' : 'form-control' }} " value="{{old('supplier_company')}}" name="supplier_company" id="supplier_company" type="text"
                                           placeholder="Empresa Fornecedora">
 

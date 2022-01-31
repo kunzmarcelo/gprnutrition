@@ -1,8 +1,7 @@
-@extends('adminlte::page')
-@section('title', 'Farms Nutrition')
+@extends('layouts.app')
 @section('css')
 <script src="https://code.highcharts.com/highcharts.js"></script>
-
+<link rel="stylesheet" href="//cdn.datatables.net/1.11.4/css/dataTables.bootstrap4.min.css">
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.all.min.js"></script>
 
@@ -76,7 +75,7 @@
                                     @foreach($results as $result)
 
                                     <tr>
-                                        <td>{{Carbon::parse($result->collection_date)->format('d/m/Y')}}</td>
+                                        <td>{{Carbon\Carbon::parse($result->collection_date)->format('d/m/Y')}}</td>
                                         <td>{{$result->liters_delivered }}</td>
                                         <td>{{$result->liters_consumption }}</td>
                                         <td>{{$result->liters_internal_consumption }}</td>
@@ -107,11 +106,11 @@
 
 
 @section('js')
-
+<script src="//code.jquery.com/jquery-3.5.1.js"></script>
 
 <script type="text/javascript">
     function deleteConfirmation(id) {
-        swal({
+        Swal.fire({
             title: "Woops!",
             text: "Deseja realmente excluir esse registro?",
             type: "warning",
@@ -132,9 +131,10 @@
                         "_token": CSRF_TOKEN,
                     },
                     success: function() {
-                        swal({
+                      Swal.fire({
                             title: "Sucesso!",
                             text: "Registro deletado com sucesso",
+                            icon: "success",
                             type: "success",
                             timer: 1500,
                         });
@@ -151,10 +151,16 @@
         })
     }
 
+
+</script>
+<script src="//cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+<script src="//cdn.datatables.net/1.11.4/js/dataTables.bootstrap4.min.js"></script>
+
+<script>
     $(document).ready(function() {
-        $('.data-table').dataTable();
+        $.noConflict();
+        var table = $('#dataTable').DataTable();
     });
 </script>
-{{-- <script src="{{asset('vendor/jquery/jquery.js')}}"></script> --}}
 @stop
 @endsection

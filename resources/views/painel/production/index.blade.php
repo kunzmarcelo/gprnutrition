@@ -1,13 +1,22 @@
-@extends('adminlte::page')
-@section('title', 'Farms Nutrition')
+
+@extends('layouts.app')
+
 @section('css')
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.all.min.js"></script>
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/switchery/0.8.2/switchery.min.css">
+
+<link rel="stylesheet" href="//cdn.datatables.net/1.11.4/css/dataTables.bootstrap4.min.css">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.min.css">
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/switchery/0.8.2/switchery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.all.min.js"></script>
 
 
 @stop
-@include('sweetalert::alert')
 @section('content')
+@include('sweetalert::alert')
+
 
 <section class="content-header">
     <div class="container-fluid">
@@ -74,7 +83,7 @@
                                     @foreach($results as $result)
 
                                     <tr>
-                                      <td>{{Carbon::parse($result->date_milking)->format('d/m/Y')}}</td>
+                                      <td>{{Carbon\Carbon::parse($result->date_milking)->format('d/m/Y')}}</td>
                                         <td>{{$result->animal->name }}</td>
                                         <td>{{$result->first_milking }}</td>
                                         <td>{{$result->second_milking }}</td>
@@ -104,14 +113,15 @@
 
 
 @section('js')
-
+<script src="//code.jquery.com/jquery-3.5.1.js"></script>
 
   <script type="text/javascript">
       function deleteConfirmation(id) {
-          swal({
+          Swal.fire({
               title: "Woops!",
               text: "Deseja realmente excluir esse registro?",
               type: "warning",
+              icon: "warning",
               showCancelButton: !0,
               confirmButtonText: "Sim",
               cancelButtonText: "Não",
@@ -129,9 +139,10 @@
                           "_token": CSRF_TOKEN,
                       },
                       success: function() {
-                          swal({
+                            Swal.fire({
                               title: "Sucesso!",
                               text: "Registro deletado com sucesso",
+                              icon: "success",
                               type: "success",
                               timer: 1500,
                           });
@@ -148,12 +159,18 @@
           })
       }
 
-      $(document).ready(function() {
-          $('.data-table').dataTable();
-      });
+
 
 </script>
-{{-- <script src="{{asset('vendor/jquery/jquery.js')}}"></script> --}}
+<script src="//cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+<script src="//cdn.datatables.net/1.11.4/js/dataTables.bootstrap4.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        $.noConflict();
+        var table = $('#dataTable').DataTable();
+    });
+</script>
 @stop
 
 @endsection

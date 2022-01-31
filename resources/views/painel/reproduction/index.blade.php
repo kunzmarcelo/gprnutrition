@@ -1,6 +1,9 @@
-@extends('adminlte::page')
-@section('title', 'Nutrition')
+@extends('layouts.app')
+
 @section('css')
+
+  <link rel="stylesheet" href="//cdn.datatables.net/1.11.4/css/dataTables.bootstrap4.min.css">
+
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.all.min.js"></script>
 
@@ -78,37 +81,37 @@
 
                                     @foreach($results as $result)
                                     <tr>
-                                        <td>{{Carbon::parse($result->created)->format('d/m/Y')}}</td>
+                                        <td>{{Carbon\Carbon::parse($result->created)->format('d/m/Y')}}</td>
                                         <td>{{$result->animals->earring.' / '.$result->animals->name }}</td>
 
                                         <td>
                                             @empty (!$result->delivery_date)
-                                            {{Carbon::parse($result->delivery_date)->format('d/m/Y') }}
+                                            {{Carbon\Carbon::parse($result->delivery_date)->format('d/m/Y') }}
                                             @endempty
                                         </td>
 
                                         <td>
                                             @empty (!$result->coverage_date)
-                                            {{Carbon::parse($result->coverage_date)->format('d/m/Y') }}
+                                            {{Carbon\Carbon::parse($result->coverage_date)->format('d/m/Y') }}
                                             @endempty
                                         </td>
                                         <td>
                                             @empty (!$result->expected_delivery_date)
-                                            {{Carbon::parse($result->expected_delivery_date)->format('d/m/Y') }}
+                                            {{Carbon\Carbon::parse($result->expected_delivery_date)->format('d/m/Y') }}
                                             @endempty
                                         </td>
                                         <td>
                                             @empty (!$result->dry_date)
-                                            {{Carbon::parse($result->dry_date)->format('d/m/Y') }}
+                                            {{Carbon\Carbon::parse($result->dry_date)->format('d/m/Y') }}
                                             @endempty
                                         </td>
                                         <td>
                                             @empty (!$result->pre_delivery_date)
-                                            {{Carbon::parse($result->pre_delivery_date)->format('d/m/Y')}}
+                                            {{Carbon\Carbon::parse($result->pre_delivery_date)->format('d/m/Y')}}
                                             @endempty
                                         </td>
                                         <td>{{$result->del }}</td>
-                                        
+
                                         <td>{{$result->situation }}</td>
                                         <td>{{$result->observation1 }}</td>
                                         <td>{{$result->observation2 }}</td>
@@ -154,15 +157,13 @@
 @section('js')
 
 
-<script>
-    $(document).ready(function() {
-        $('.data-table').dataTable();
-    });
-</script>
-
+  <script src="//code.jquery.com/jquery-3.5.1.js"></script>
+  <script src="//cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+  <script src="//cdn.datatables.net/1.11.4/js/dataTables.bootstrap4.min.js"></script>
 <script type="text/javascript">
     function deleteConfirmation(id) {
-        swal({
+        Swal.fire({
+            icon: "warning",
             title: "Woops!",
             text: "Deseja realmente excluir esse registro?",
             type: "warning",
@@ -183,10 +184,11 @@
                         "_token": CSRF_TOKEN,
                     },
                     success: function() {
-                        swal({
+                          Swal.fire({
                             title: "Sucesso!",
                             text: "Registro deletado com sucesso",
                             type: "success",
+                            icon: "success",
                             timer: 1500,
                         });
                         document.location.reload(true);
@@ -202,11 +204,14 @@
         })
     }
 
-    $(document).ready(function() {
-        $('.data-table').dataTable();
-    });
+
 </script>
 {{-- <script src="{{asset('vendor/jquery/jquery.js')}}"></script> --}}
-
+<script>
+$(document).ready(function () {
+    $.noConflict();
+    var table = $('#dataTable').DataTable();
+});
+</script>
 @stop
 @endsection

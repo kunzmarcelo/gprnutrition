@@ -1,6 +1,4 @@
-@extends('adminlte::page')
-@section('title', 'Farms Nutrition')
-
+@extends('layouts.app')
 
 @section('content')
 
@@ -126,7 +124,7 @@
     </div><!-- /.container-fluid -->
 </section>
 @section('js')
-
+<script src="//code.jquery.com/jquery-3.5.1.js"></script>
 <script>
     var liters_delivered = document.getElementById("liters_delivered");
     var liters_consumption = document.getElementById("liters_consumption");

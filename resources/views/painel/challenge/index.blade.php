@@ -1,11 +1,9 @@
-@extends('adminlte::page')
-@section('title', 'Farms Nutrition')
+@extends('layouts.app')
+
 @section('css')
-<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.all.min.js"></script>
-
-
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
+  <link rel="stylesheet" href="//cdn.datatables.net/1.11.4/css/dataTables.bootstrap4.min.css">
 @stop
-@include('sweetalert::alert')
 @section('content')
 
 <section class="content-header">
@@ -78,9 +76,9 @@
                                     <tr>
                                       <td>{{$result->animal->earring.' / '. $result->animal->name }}</td>
 
-                                        <td>{{Carbon::parse($result->start_date)->format('d/m/Y')}}</td>
-                                        <td>{{Carbon::parse($result->analysis_time)->format('d/m/Y')}}</td>
-                                        <td>{{ Carbon::parse( $result->analysis_time )->diffInDays(Carbon::now()) .' dias'}}</td>
+                                        <td>{{Carbon\Carbon::parse($result->start_date)->format('d/m/Y')}}</td>
+                                        <td>{{Carbon\Carbon::parse($result->analysis_time)->format('d/m/Y')}}</td>
+                                        <td>{{ Carbon\Carbon::parse( $result->analysis_time )->diffInDays(Carbon\Carbon::now()) .' dias'}}</td>
 
                                         <td>{{$result->coefficient }}</td>
                                         <td>{{$result->result .' kg/dia'}}</td>
@@ -112,9 +110,11 @@
 
 
 @section('js')
+  <script src="//code.jquery.com/jquery-3.5.1.js"></script>
+
   <script type="text/javascript">
       function deleteConfirmation(id) {
-          swal({
+            Swal.fire({
               title: "Woops!",
               text: "Deseja realmente excluir esse registro?",
               type: "warning",
@@ -135,7 +135,7 @@
                           "_token": CSRF_TOKEN,
                       },
                       success: function() {
-                          swal({
+                            Swal.fire({
                               title: "Sucesso!",
                               text: "Registro deletado com sucesso",
                               type: "success",
@@ -154,12 +154,17 @@
           })
       }
 
+
+  </script>
+  <script src="//cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+  <script src="//cdn.datatables.net/1.11.4/js/dataTables.bootstrap4.min.js"></script>
+
+  <script>
       $(document).ready(function() {
-          $('.data-table').dataTable();
+          $.noConflict();
+          var table = $('#dataTable').DataTable();
       });
   </script>
-
-{{-- <script src="{{asset('vendor/jquery/jquery.js')}}"></script> --}}
 @stop
 
 @endsection

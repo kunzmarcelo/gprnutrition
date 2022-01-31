@@ -1,6 +1,4 @@
-@extends('adminlte::page')
-@section('title', 'Farms Nutrition')
-
+@extends('layouts.app')
 
 @section('content')
 <section class="content-header">
@@ -133,6 +131,7 @@
 </section>
 @include('sweetalert::alert')
 @section('js')
+  <script src="//code.jquery.com/jquery-3.5.1.js"></script>
   <script type="text/javascript">
       $(document).ready(function() {
           $('select[name="animal_id"]').on('change', function() {
@@ -176,84 +175,5 @@
   </script>
 @stop
 
-@section('jsas')
 
-<script>
-    // <----- calculo del está OK Aqui------->
-    $(document).ready(function() {
-        $("#last_birth").on("change", function() {
-            const last_birth = moment(new Date($("#last_birth").val()));
-            const date = moment(new Date());
-            const duration = moment.duration(date.diff(last_birth));
-            // Mostra a diferença em dias
-            const days = duration.asDays();
-
-            document.getElementById('del').value = eval(days.toFixed(0));
-
-        });
-    });
-    // <----- calculo del está OK Até aqui------->
-
-    // <----- calculo proximo cio aqui------->
-
-    $(document).ready(function() {
-        $("#insemination_date").on("change", function() {
-            var date_cio = new Date($("#insemination_date").val()); // data do proximo cio
-            var date_toque = new Date($("#insemination_date").val()); // data para o proximo toque
-            var date_para_secar = new Date($("#insemination_date").val()); //data de secar
-            var date_previsao_parto = new Date($("#insemination_date").val()); //  data de previsao de parto
-            var date_pre_parto = new Date($("#insemination_date").val()); // data do transicao
-            //days = parseInt($("#days").val(), 10);
-
-            if (!isNaN(date_cio.getTime())) {
-
-                // console.log(date_para_secar.setDate(date_para_secar.getDate() + (282 - 60)));
-
-                date_cio.setDate(date_cio.getDate() + {{$setting->pregnancy_confirmation}}); // data do proximo cio
-                date_toque.setDate(date_toque.getDate() + {{$setting->released_for_ultrasound}}); // data para o proximo toque
-                date_previsao_parto.setDate(date_previsao_parto.getDate() + {{$setting->animal_birth}}); // data de previsao de parto
-                date_para_secar.setDate(date_para_secar.getDate() + {{$setting->dry_animal}}); //data para secar
-                date_pre_parto.setDate(date_pre_parto.getDate() + {{$setting->pre_delivery}}); //data para pré parto
-
-
-                $('#date_next_heat')[0].valueAsDate = date_cio;
-                $('#date_touch')[0].valueAsDate = date_toque;
-                $('#delivery_date')[0].valueAsDate = date_previsao_parto;
-                $('#dry_date')[0].valueAsDate = date_para_secar;
-                $('#transition_date')[0].valueAsDate = date_pre_parto;
-
-
-                const last_birth = moment(new Date($("#last_birth").val())); // data do ultmo parto
-                const dated_teste = moment(new Date($("#delivery_date").val()));
-                const duration = moment.duration(dated_teste.diff(last_birth));
-                // Mostra a diferença em dias
-                const days = duration.asDays();
-                // const days = duration.asDays() / {{$setting->average_day_of_the_month}};
-
-                document.getElementById('iep').value = eval(days.toFixed(0));
-
-            } else {
-                sweetAlert({
-                    title: 'Woops!',
-                    text: 'Informe a data corretamente!',
-                    icon: 'error',
-                    showCancelButton: true,
-                    cancelButtonText: 'Fechar',
-                    autoclose: 1500,
-                });
-                $("#insemination_date").focus();
-            }
-        });
-
-        Date.prototype.toInputFormat = function() {
-            var yyyy = this.getFullYear().toString();
-            var mm = (this.getMonth() + 1).toString();
-            var dd = this.getDate().toString();
-            return yyyy + "-" + (mm[1] ? mm : "0" + mm[0]) + "-" + (dd[1] ? dd : "0" + dd[0]);
-        };
-    });
-
-</script>
-
-@stop
 @endsection

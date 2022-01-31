@@ -1,9 +1,6 @@
-@extends('adminlte::page')
-@section('title', 'Farms Nutrition')
-
+@extends('layouts.app')
 
 @section('content')
-
 <section class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
@@ -246,7 +243,7 @@
     </div><!-- /.container-fluid -->
 </section>
 @section('js')
-
+<script src="//code.jquery.com/jquery-3.5.1.js"></script>
 <script type="text/javascript">
 
 $('#start_date')[0].valueAsDate = new Date();

@@ -159,11 +159,12 @@
     <!-- FIM MODAL DE CONFIRMAR SECAGEM-->
 
     @section('css')
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.all.min.js"></script>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.all.min.js"></script>
     @stop
     @section('js')
 
+      <script src="//code.jquery.com/jquery-3.5.1.js"></script>
 
     <script type="text/javascript">
         $('#edit').on('show.bs.modal', function(event) {
@@ -198,7 +199,7 @@
                     'id': id
                 },
                 success: function() {
-                    swal({
+                    Swal.fire({
                         title: "Sucesso!",
                         text: "Registro alterado com sucesso",
                         type: "success",

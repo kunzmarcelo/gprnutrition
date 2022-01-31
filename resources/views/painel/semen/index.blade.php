@@ -1,7 +1,10 @@
-@extends('adminlte::page')
-@section('title', 'Farms Nutrition')
-@section('content')
+@extends('layouts.app')
 
+@section('css')
+  
+  <link rel="stylesheet" href="//cdn.datatables.net/1.11.4/css/dataTables.bootstrap4.min.css">
+@stop
+@section('content')
 <section class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
@@ -113,12 +116,15 @@
 
 @section('js')
 
+  <script src="//code.jquery.com/jquery-3.5.1.js"></script>
+  <script src="//cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+  <script src="//cdn.datatables.net/1.11.4/js/dataTables.bootstrap4.min.js"></script>
 
 <script>
-    $(document).ready(function() {
-        $('.data-table').dataTable();
-    });
+$(document).ready(function () {
+    $.noConflict();
+    var table = $('#dataTable').DataTable();
+});
 </script>
-
 @stop
 @endsection

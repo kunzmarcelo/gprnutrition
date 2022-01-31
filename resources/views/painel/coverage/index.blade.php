@@ -1,11 +1,15 @@
-@extends('adminlte::page')
-@section('title', 'Farms Nutrition')
-@section('css')
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/switchery/0.8.2/switchery.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/switchery/0.8.2/switchery.min.js"></script>
+@extends('layouts.app')
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.all.min.js"></script>
+@section('css')
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/switchery/0.8.2/switchery.min.css">
+
+<link rel="stylesheet" href="//cdn.datatables.net/1.11.4/css/dataTables.bootstrap4.min.css">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.min.css">
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/switchery/0.8.2/switchery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.all.min.js"></script>
 
 
 @stop
@@ -65,7 +69,7 @@
                                     <tr>
                                         <th>#</th>
                                         <th>Animal</th>
-                                        <th>Cobertura</th>                                        
+                                        <th>Cobertura</th>
                                         <th>Tipo</th>
                                         <th>Prox. Cio</th>
                                         <th>Prox. toque</th>
@@ -81,87 +85,80 @@
                                 </thead>
 
                                 <tbody>
-
-
                                     @foreach($results as $result)
+                                        <tr>
+                                            <td>{{$result->id}}</td>
+                                            <td>{{$result->animal->name }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($result->insemination_date)->format('d/m/Y')}}</td>
 
-                                    @if($result->diagnosis == 'Prenha' && $result->animal_id == $result->animal->id )
-                                    {{$result->count() }}
+                                            <td>{{$result->type }}</td>
 
-                                    @endif
-
-                                    <tr>
-                                        <td>{{$result->id}}</td>
-                                        <td>{{$result->animal->name }}</td>
-                                        <td>{{ \Carbon\Carbon::parse($result->insemination_date)->format('d/m/Y')}}</td>
-                                        
-                                        <td>{{$result->type }}</td>
-
-                                        @if($result->diagnosis == 'Não Diagnosticado')
-                                        <td>{{ \Carbon\Carbon::parse($result->date_next_heat)->format('d/m/Y')}}</td>
-                                        <td>{{ \Carbon\Carbon::parse($result->date_touch)->format('d/m/Y')}}</td>
-                                        <td>-</td>
-                                        <td>-</td>
-                                        <td>-</td>
-                                        @endif
-                                        @if($result->diagnosis == 'Prenha')
-                                        <td>-</td>
-                                        <td>-</td>
-                                        <td>{{ \Carbon\Carbon::parse($result->dry_date)->format('d/m/Y')}}</td>
-                                        <td>{{ \Carbon\Carbon::parse($result->transition_date)->format('d/m/Y')}}</td>
-                                        <td>{{ \Carbon\Carbon::parse($result->delivery_date)->format('d/m/Y')}}</td>
-                                        @endif
-                                        @if($result->diagnosis == 'Falha')
-                                        <td>{{\Carbon\Carbon::parse($result->date_next_heat)->format('d/m/Y')}}</td>
-                                        <td>-</td>
-                                        <td>-</td>
-                                        <td>-</td>
-                                        <td>-</td>
-                                        @endif
-                                        <td>{{$result->del }}</td>
-                                        <td>
-                                            @if($result->iep > '0.00')
-                                            {{ $result->iep }}
-                                            @endif
-                                        </td>
-                                        <td>
                                             @if($result->diagnosis == 'Não Diagnosticado')
-
-                                            <div class="btn-group w-100">
-                                                <button type="submit" class="btn btn-success col" data-id='{{$result->id}}' value="Prenha" name="Prenha" id="Prenha" title="Prenha">
-                                                    <i class="far fa-thumbs-up"></i>
-                                                </button>
-                                                <button type="submit" class="btn btn-danger col " data-id='{{$result->id}}' value="Falha" name="Falha" id="Falha" title="Falha">
-                                                    <i class="far fa-thumbs-down"></i>
-                                                </button>
+                                                <td>{{ \Carbon\Carbon::parse($result->date_next_heat)->format('d/m/Y')}}</td>
+                                                <td>{{ \Carbon\Carbon::parse($result->date_touch)->format('d/m/Y')}}</td>
+                                                <td>-</td>
+                                                <td>-</td>
+                                                <td>-</td>
                                                 @endif
-
                                                 @if($result->diagnosis == 'Prenha')
-                                                <button type="submit" class="btn btn-success col">
-                                                    <i class="far fa-thumbs-up"></i> {{$result->diagnosis }}
-                                                </button>
+                                                    <td>-</td>
+                                                    <td>-</td>
+                                                    <td>{{ \Carbon\Carbon::parse($result->dry_date)->format('d/m/Y')}}</td>
+                                                    <td>{{ \Carbon\Carbon::parse($result->transition_date)->format('d/m/Y')}}</td>
+                                                    <td>{{ \Carbon\Carbon::parse($result->delivery_date)->format('d/m/Y')}}</td>
+                                                    @endif
+                                                    @if($result->diagnosis == 'Falha')
+                                                        <td>{{\Carbon\Carbon::parse($result->date_next_heat)->format('d/m/Y')}}</td>
+                                                        <td>-</td>
+                                                        <td>-</td>
+                                                        <td>-</td>
+                                                        <td>-</td>
+                                                        @endif
+                                                        <td>{{$result->del }}</td>
+                                                        <td>
+                                                            @if($result->iep > '0.00')
+                                                                {{ $result->iep }}
+                                                                @endif
+                                                        </td>
+                                                        <td>
+                                                            @if($result->diagnosis == 'Não Diagnosticado')
 
-                                                @endif
-                                                @if($result->diagnosis == 'Falha')
-                                                <button type="submit" class="btn btn-danger col">
-                                                    <i class="far fa-thumbs-down"></i> {{$result->diagnosis }}
-                                                </button>
+                                                                <div class="btn-group w-100">
+                                                                    <button type="submit" class="btn btn-success col" data-id='{{$result->id}}' value="Prenha" name="Prenha" id="Prenha" title="Prenha">
+                                                                        <i class="far fa-thumbs-up"></i>
+                                                                    </button>
+                                                                    <button type="submit" class="btn btn-danger col " data-id='{{$result->id}}' value="Falha" name="Falha" id="Falha" title="Falha">
+                                                                        <i class="far fa-thumbs-down"></i>
+                                                                    </button>
+                                                                    @endif
 
-                                                @endif
-                                            </div>
-                                        </td>
-                                        <td>
-                                            @if($result->situation =='Pariu')
-                                            <button type="submit" class="btn btn-info col">{!! $result->situation ?? "<small>Aguardando...</small>"  !!}</button>
-                                            @else
-                                            <button type="submit" class="btn btn-warning col">{!! $result->situation ?? "<small>Aguardando...</small>"  !!}</button>
-                                            @endif
-                                        </td>
-                                        {{-- <td>
-                                            <button class="btn btn-danger btn-sm" data-id="{{ $result->id }}" data-action="{{ route('cobertura.destroy',$result->id) }}" onclick="deleteConfirmation({{$result->id}})"><i class="fas fa-trash"></i></button>
-                                        </td> --}}
-                                    </tr>
-                                    @endforeach
+                                                                    @if($result->diagnosis == 'Prenha')
+                                                                        <button type="submit" class="btn btn-success col">
+                                                                            <i class="far fa-thumbs-up"></i> {{$result->diagnosis }}
+                                                                        </button>
+
+                                                                        @endif
+                                                                        @if($result->diagnosis == 'Falha')
+                                                                            <button type="submit" class="btn btn-danger col">
+                                                                                <i class="far fa-thumbs-down"></i> {{$result->diagnosis }}
+                                                                            </button>
+
+                                                                            @endif
+                                                                </div>
+                                                        </td>
+                                                        <td>
+                                                            @if($result->situation =='Pariu')
+                                                                <button type="submit" class="btn btn-info col">{!! $result->situation ?? "<small>Aguardando...</small>" !!}</button>
+                                                                @else
+                                                                <button type="submit" class="btn btn-warning col">{!! $result->situation ?? "<small>Aguardando...</small>" !!}</button>
+                                                                @endif
+                                                        </td>
+                                                        {{-- <td>
+                                            <button class="btn btn-danger btn-sm" data-id="{{ $result->id }}" data-action="{{ route('cobertura.destroy',$result->id) }}" onclick="deleteConfirmation({{$result->id}})"><i
+                                                          class="fas fa-trash"></i></button>
+                                                        </td> --}}
+                                        </tr>
+                                        @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -177,49 +174,49 @@
 
 
 @section('js')
+  <script src="//code.jquery.com/jquery-3.5.1.js"></script>
 
 <script type="text/javascript">
     $(document).ready(function() {
         $('button').click(function() {
             let id = $(this).data("id")
             let status = $(this).val();
-            let userId = {{auth()->user()->id}}
-                
-
-
+            let userId ={{auth()->user()->id}};
 
 
             validUrl = '{{url("/painel/changeDiagnostic")}}';
             $.ajax({
-                type: "GET"
-                , dataType: "json"
-                , url: validUrl
-                , data: {
-                    'id': id
-                    , 'status': status
-                    , 'user_id': userId
-                }
-                , success: function() {
-                    swal({
-                        title: "Sucesso!"
-                        , text: "Registro alterado com sucesso"
-                        , type: "success"
-                        , timer: 1500
-                    , });
+                type: "GET",
+                dataType: "json",
+                url: validUrl,
+                data: {
+                    'id': id,
+                    'status': status,
+                    'user_id': userId
+                },
+                success: function() {
+                    Swal.fire({
+                        title: "Sucesso!",
+                        text: "Registro alterado com sucesso",
+                        type: "success",
+                        icon: "success",
+                        timer: 1500,
+                    });
                     document.location.reload(true);
                 }
             });
         });
 
     });
-
 </script>
+<script src="//cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+<script src="//cdn.datatables.net/1.11.4/js/dataTables.bootstrap4.min.js"></script>
 
 <script>
     $(document).ready(function() {
-        $('.data-table').dataTable();
+        $.noConflict();
+        var table = $('#dataTable').DataTable();
     });
-
 </script>
 
 @stop
